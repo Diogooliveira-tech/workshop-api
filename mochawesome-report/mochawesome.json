@@ -1,0 +1,100 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2024-11-27T01:50:24.898Z",
+    "end": "2024-11-27T01:50:26.035Z",
+    "duration": 1137,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "791290cc-2b08-400a-8bb3-fbe05ee05295",
+      "title": "",
+      "fullFile": "C:\\Users\\diogo\\OneDrive\\Documentos\\PÓS GRADUAÇÃO EM TESTE DE SOFTWARE\\WORKSHOP-API\\tests\\login\\login.test.js",
+      "file": "\\tests\\login\\login.test.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "81f1cf21-f3cb-4bc4-8ec9-6106bea32098",
+          "title": "Produtos",
+          "fullFile": "C:\\Users\\diogo\\OneDrive\\Documentos\\PÓS GRADUAÇÃO EM TESTE DE SOFTWARE\\WORKSHOP-API\\tests\\login\\login.test.js",
+          "file": "\\tests\\login\\login.test.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Deve buscar os produtos ao enviar credenciais válidas",
+              "fullTitle": "Produtos Deve buscar os produtos ao enviar credenciais válidas",
+              "timedOut": false,
+              "duration": 1118,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const loginResponse = await request('http://165.227.93.41/lojinha/v2')\n    .post('/login')\n    .set('Content-Type', 'application/json')\n    // .auth('usuario', 'senha')\n    .send({\n        'usuarioLogin': 'cgts',\n        'usuarioSenha': '123456'\n    }) \n\nconst token = loginResponse.body.data.token\nconst produtosResponse = await request('http://165.227.93.41/lojinha/v2')\n    .get('/produtos')\n    .set('token', token)\n// assert.equal(produtosResponse.body.message, 'Listagem de produtos realizada com sucesso')  \n// assert.equal(produtosResponse.status, 200)\nexpect(produtosResponse.body.message).to.be.equal('Listagem de produtos realizada com sucesso')\nexpect(produtosResponse.status).to.be.equal(200)\nexpect(produtosResponse.body.message).to.include('sucesso')\nconst trackinas = {\n    produtoId: 983363,\n    produtoNome: 'Trackinas',\n    produtoValor: 7000,\n    produtoCores: [ 'Rosa' ],\n    produtoUrlMock: 'N/A',\n    componentes: []\n}\nexpect(produtosResponse.body.data).to.deep.include(trackinas)\nexpect(produtosResponse.body.data[0]).to.have.property('produtoUrlMock')\n// expect(produtosResponse.body.data[0].produtoNome).to.be.a('string')\nconst validate = ajv.compile(getProdutosSchema)\nconst atendeuAoSchema = validate(produtosResponse.body)\nconsole.log(atendeuAoSchema)\nexpect(atendeuAoSchema).to.be.true;",
+              "err": {},
+              "uuid": "a68330db-9268-47ba-872f-2cce0ba4da23",
+              "parentUUID": "81f1cf21-f3cb-4bc4-8ec9-6106bea32098",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "a68330db-9268-47ba-872f-2cce0ba4da23"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1118,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 50000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 50000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "10.8.2"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": null,
+      "version": "6.2.0"
+    }
+  }
+}
